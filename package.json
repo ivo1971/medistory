@@ -1,7 +1,7 @@
 {
-  "name": "ILU Test application",
-  "version": "0.0.1",
-  "description": "Test application",
+  "name": "node-js-getting-started",
+  "version": "0.1.4",
+  "description": "A sample Node.js app using Express 4",
   "main": "server.js",
   "scripts": {
     "start": "node server.js"
@@ -15,12 +15,12 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/ilu1971/medistory"
+    "url": "https://github.com/heroku/node-js-getting-started"
   },
   "keywords": [
     "node",
     "heroku",
     "express"
   ],
-  "license": "GPL 3"
+  "license": "MIT"
 }
