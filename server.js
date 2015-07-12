@@ -39,7 +39,8 @@ pg.connect("postgres://eownbaptogawyg:BHrnxBW1zlh890zBf-9HgK-vNg@ec2-107-22-175-
 		
   //var query = client.query('CREATE TABLE Users (Name char(50))');
 
-  var query = client.query('SELECT * FROM Users');
+  var query = client.query("SELECT * FROM information_schema.tables WHERE table_schema = 'public'");
+  //var query = client.query('SELECT * FROM Users');
   query.on('row', function(row) {
     console.log(JSON.stringify(row));
   });
