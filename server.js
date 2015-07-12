@@ -33,13 +33,12 @@ var server = app.listen(app.get('port'), function () {
 
 
 
-pg.connect("postgres://mtozgtxbvbbotn:91R0soZegQvhaWum-hH_yXEpPq@ec2-107-22-175-206.compute-1.amazonaws.com:5432/d1c0p1gl10d6sv", function(err, client) {
+pg.connect("postgres://eownbaptogawyg:BHrnxBW1zlh890zBf-9HgK-vNg@ec2-107-22-175-206.compute-1.amazonaws.com:5432/de3pjesrssbrd8", function(err, client) {
   console.log('DB connection');
   console.log(err);
 		
+  var query = client.query('CREATE TABLE Users (Name char(50))');
   /*
-  var query = client.query('SELECT * FROM your_table');
-
   query.on('row', function(row) {
     console.log(JSON.stringify(row));
   });
