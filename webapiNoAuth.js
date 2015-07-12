@@ -2,6 +2,7 @@ var express = require('express');
 var router = express.Router();
 
 // check that all requests are JSON requests
+//
 router.use(function (req, res, next) {
   console.log('Time: ', Date.now());
   next();
