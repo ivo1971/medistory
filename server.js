@@ -33,7 +33,7 @@ var server = app.listen(app.get('port'), function () {
 
 
 
-pg.connect(process.env.DATABASE_URL, function(err, client) {
+pg.connect("postgres://mtozgtxbvbbotn:91R0soZegQvhaWum-hH_yXEpPq@ec2-107-22-175-206.compute-1.amazonaws.com:5432/d1c0p1gl10d6sv", function(err, client) {
   console.log('DB connection');
   console.log(err);
 		
