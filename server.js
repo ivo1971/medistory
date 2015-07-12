@@ -1,5 +1,6 @@
 //requires
 var express      = require('express');
+var pg           = require('pg');
 var webapiNoAuth = require('./webapiNoAuth');
 
 //create global app instance
@@ -28,4 +29,19 @@ var server = app.listen(app.get('port'), function () {
   var port = server.address().port;
 
   console.log('App listening at http://%s:%s', host, port);
+});
+
+
+
+pg.connect(process.env.DATABASE_URL, function(err, client) {
+  console.log('DB connection');
+  console.log(err);
+		
+  /*
+  var query = client.query('SELECT * FROM your_table');
+
+  query.on('row', function(row) {
+    console.log(JSON.stringify(row));
+  });
+  */
 });
