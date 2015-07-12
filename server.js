@@ -45,7 +45,11 @@ pg.connect("postgres://eownbaptogawyg:BHrnxBW1zlh890zBf-9HgK-vNg@ec2-107-22-175-
     console.log(JSON.stringify(row));
   });
 
-  //var query1 = client.query('INSERT INTO Users VALUES (Ivo)');
+  var query1 = client.query('INSERT INTO users VALUES (Ivo)');
   //var query2 = client.query('INSERT INTO Users (Name) VALUES (Rina)');
 
+  var query3 = client.query('SELECT * FROM Users');
+  query3.on('row', function(row) {
+    console.log(JSON.stringify(row));
+  });
 });
