@@ -1,17 +1,33 @@
-//requires
-var express      = require('express');
-var pg           = require('pg');
-var webapiNoAuth = require('./webapiNoAuth');
+//requires of external modules
+var bodyParser 				= require('body-parser');
+var express       			= require('express');
+var mongoose      			= require('mongoose');
+
+//requires of internal modules
+var configuration 			= require('./server/configuration');
+var webapiPublic  			= require('./server/webapi/public');
+var webapiPrivateUsers		= require('./server/webapi/private/users');
+
+//connect to the database
+mongoose.connect(configuration.DataBase());
+var db = mongoose.connection;
+db.on('error', console.error.bind(console, 'connection error:'));
+db.once('open', function (callback) {
+  console.log("connected to database");
+});
 
 //create global app instance
 var app = express();
 
 //configure the application port: use the Heroku port when available
 //                                for local tests: use a fixed number 
-app.set('port', (process.env.PORT || 8080));
+app.set('port', (configuration.Port()));
 
-//handle static file request: server them from the 'static' directory
-app.use(express.static(__dirname + '/static'));
+//parse JSON info in the body of the request into req.body
+app.use(bodyParser.json());
+
+//handle static file request: server them from the 'public' directory
+app.use(express.static(__dirname + '/public'));
 
 //add a route for the website root: redirect it to the index page,
 //                                  which is the basis of the SPA
@@ -20,8 +36,11 @@ app.route('/')
 		res.redirect('/index.html');
 	});
 
-//add a route for the unauthenticated web API
-app.use('/apiNoAuth', webapiNoAuth);
+//add routes for the public web API
+app.use('/api/public',  webapiPublic);
+
+//add routes for the private web API
+app.use('/api/private/users', webapiPrivateUsers);
 
 //run the server
 var server = app.listen(app.get('port'), function () {
@@ -29,27 +48,4 @@ var server = app.listen(app.get('port'), function () {
   var port = server.address().port;
 
   console.log('App listening at http://%s:%s', host, port);
-});
-
-
-
-pg.connect("postgres://eownbaptogawyg:BHrnxBW1zlh890zBf-9HgK-vNg@ec2-107-22-175-206.compute-1.amazonaws.com:5432/de3pjesrssbrd8", function(err, client) {
-  console.log('DB connection');
-  console.log(err);
-		
-  //var query = client.query('CREATE TABLE Users (Name char(50))');
-
-  var query = client.query("SELECT * FROM information_schema.tables WHERE table_schema = 'public'");
-  //var query = client.query('SELECT * FROM Users');
-  query.on('row', function(row) {
-    console.log(JSON.stringify(row));
-  });
-
-  var query1 = client.query('INSERT INTO users VALUES (Ivo)');
-  //var query2 = client.query('INSERT INTO Users (Name) VALUES (Rina)');
-
-  var query3 = client.query('SELECT * FROM Users');
-  query3.on('row', function(row) {
-    console.log(JSON.stringify(row));
-  });
 });
